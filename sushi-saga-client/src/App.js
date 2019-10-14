@@ -19,15 +19,16 @@ class App extends Component {
   }
 
   onSushiClick = (sushi) => {
-    this.setState({balance: this.state.balance - sushi.price})
-    // let newSushisEaten = [...this.state.sushisEaten]
-    // this.setState({sushisEaten: newSushisEaten.push(sushi.id)})
-    this.setState({sushisEaten: [...this.state.sushisEaten, sushi.id]})
+    this.setState({sushisEaten: [...this.state.sushisEaten, sushi.id]}, {balance: this.state.balance - sushi.price})
   }
 
+  handleSubmit = (event, amount) => {
+    event.preventDefault(); 
+    this.setState({balance : this.state.balance + amount})
+  }
 
   componentDidMount() {
-    fetch(API).then(resp=>resp.json()).then(respSushis => this.setState({sushis: respSushis}))
+    fetch(API).then(resp=>resp.json()).then(sushis => this.setState({ sushis }))
   }
  
   
@@ -42,8 +43,8 @@ class App extends Component {
     const sushis =this.getSushis()
     return (
       <div className="app">
-        <SushiContainer balance={this.state.balance} sushisEaten={this.state.sushisEaten} appSushiClick={this.onSushiClick} onMoreButtonClick={this.onMoreButtonClick} sushis={sushis} />
-        <Table sushisEaten={this.state.sushisEaten} balance={this.state.balance}/>
+        <SushiContainer  balance={this.state.balance} sushisEaten={this.state.sushisEaten} appSushiClick={this.onSushiClick} onMoreButtonClick={this.onMoreButtonClick} sushis={sushis} />
+        <Table handleSubmit={this.handleSubmit} sushisEaten={this.state.sushisEaten} balance={this.state.balance}/>
       </div>
     );
   }

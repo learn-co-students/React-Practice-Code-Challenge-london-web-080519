@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import AddMoneyForm from '../components/AddMoneyForm'
 
 const Table = (props) => {
 
@@ -13,6 +14,7 @@ const Table = (props) => {
       <h1 className="remaining">
         You have: ${props.balance} remaining!
       </h1>
+      <AddMoneyForm handleSubmit={props.handleSubmit}/>
       <div className="table">
         <div className="stack">
           {
